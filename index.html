@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Private Server Manager</title>
+</head>
+<body>
+    <div id="root">
+        <div id="serverPage" class="screen">
+            <div id="serverHeader" class="pageElement">
+                <div id="headerLeft" class="headerSide"></div>
+                <div id="headerMid" class="flexColCenter">
+                    <div id="serverTitle">{{ servers[currentServer].name }}</div>
+                    <div id="serverSubtitle" class="textSubtitle">A {{ servers[currentServer].type }} private server</div>
+                </div>
+                <div id="headerRight" class="headerSide"></div>
+            </div>
+
+            <div id="serverInfo" class="pageElement">
+                <div class="sideHeader element">Server Information</div>
+                <div id="serverStatistics">
+                    <div class="statBox element">
+                        <div class="resGroup">
+                            <div class="sideSubtitle element">Banners</div>
+                            <table>
+                                <tr is="resource-display" :res="servers[currentServer].bannerRef" :showpercent="true"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].bannerVote" :showpercent="true"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].bannerDonate" :showpercent="true"></tr>
+                            </table>
+                        </div>
+
+                        <div class="resGroup">
+                            <div class="sideSubtitle element">Client</div>
+                            <table>
+                                <tr is="resource-display" :res="servers[currentServer].currClient" :showpercent="true"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].officialClient" :showpercent="false"></tr>
+                            </table>
+                        </div>
+
+                        <div class="resGroup">
+                            <div class="sideSubtitle element">NPCs</div>
+                            <table>
+                                <tr is="resource-display" :res="servers[currentServer].currNPCs" :showpercent="false"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].officialNPCs" :showpercent="false"></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="statBox element">
+                        <div class="resGroup">
+                            <div class="sideSubtitle element">Custom Content</div>
+                            <table>
+                                <tr is="resource-display" :res="servers[currentServer].quests" :showpercent="true"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].customContent" :showpercent="false"></tr>
+                            </table>
+                        </div>
+
+                        <div class="resGroup">
+                            <div class="sideSubtitle element">Game Stats</div>
+                            <table>
+                                <tr is="resource-display" :res="servers[currentServer].popularity" :showpercent="false"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].reputation" :showpercent="false"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].fun" :showpercent="false"></tr>
+                                <tr is="resource-display" :res="servers[currentServer].users" :showpercent="false"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="serverLog" class="element"></div>
+            </div>
+
+            <div id="serverSettings" class="pageElement">
+                <div class="sideHeader right element">Server Options</div>
+                <div class="btnHolder flexRowCenter">
+                    <div id="serverAdmin" class="element btn" v-on:click="changeServerpage(0)">Admins</div>
+                    <div id="serverHost" class="element btn" v-on:click="changeServerpage(1)">Hosting</div>
+                    <div id="serverUsers" class="element btn" v-on:click="changeServerpage(2)">Users</div>
+                </div>
+
+                <div id="adminPage" class="settingsPage flexColCenter">
+                    <table id="adminTable">
+                        <tr>
+                            <th></th>
+                            <th class="design">Design</th>
+                            <th class="client">Client</th>
+                            <th class="programming">Programming</th>
+                            <th class="scripting">Scripting</th>
+                            <th></th>
+                        </tr>
+                        <tr is="admin-display" v-for="(admin, index) in servers[currentServer].admins" :key="admin.id" :admin="admin" :index="index" :changetask="true"></tr>
+                    </table>
+                </div>
+
+                <div id="taskPage" class="settingsPage flexColCenter">
+                    <table id="adminDisp" class="element">
+                        <tr is="admin-display" :key="servers[currentServer].admins[servers[currentServer].tempAdmin].id" :admin="servers[currentServer].admins[servers[currentServer].tempAdmin]" :index="0" :changetask="false"></admin-display>
+                    </table>
+                    <div class="wrap flexRowCenter element">
+                        <div class="taskBox">
+                            <table id="designTable" class="taskTable element"></table>
+                            <table id="clientTable" class="taskTable element"></table>
+                        </div>
+
+                        <div class="taskBox">
+                            <table id="programmingTable" class="taskTable element"></table>
+                            <table id="scriptingTable" class="taskTable element"></table>
+                        </div>
+                    </div>
+                    <div id="taskBtn" class="element btn aMargin" v-on:click="changeTask()">Change Task</div>
+                </div>
+
+                <div id="hostPage" class="settingsPage flexColCenter">
+                    <table id="hostTable" class="element">
+                        <tr>
+                            <th></th>
+                            <th>Host Name</th>
+                            <th>Max Players</th>
+                            <th>Uptime</th>
+                            <th>Cost</th>
+                        </tr>
+                    </table>
+
+                    <div id="changeHost" class="element btn aMargin" v-on:click="renewHosting()">Renew hosting for 1 month</div>
+                    <div class="element">Hosting expires in {{ servers[currentServer].hostDays }} days.</div>
+                </div>
+
+                <div id="userPage" class="settingsPage flexColCenter">
+                    <div class="wrap flexRowCenter element">
+                        <div class="referralMethod cenBox flexColCenter element">
+                            <div>Donation Method:</div>
+                            <div id="donateBox" class="element btn aMargin dropdown" v-on:click="dropPerk(0)">{{ DonorPerksAnti[servers[currentServer].donorPerk] }}</div>
+                            <div id="dropDonate" class="dropdown_elements">
+                                <a href="#" v-on:click="servers[currentServer].donorPerk = 0">{{ DonorPerksAnti[0] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].donorPerk = 1">{{ DonorPerksAnti[1] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].donorPerk = 2">{{ DonorPerksAnti[2] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].donorPerk = 3">{{ DonorPerksAnti[3] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].donorPerk = 4">{{ DonorPerksAnti[4] }}</a>
+                            </div>
+                        </div>
+
+                        <div class="donationBenefit cenBox flexColCenter element">
+                            <div>Referral Method:</div>
+                            <div id="refBox" class="element btn aMargin dropdown" v-on:click="dropPerk(1)">{{ AdvertAnti[servers[currentServer].advertisement] }}</div>
+                            <div id="dropRef" class="dropdown_elements">
+                                <a href="#" v-on:click="servers[currentServer].advertisement = 0">{{ AdvertAnti[0] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].advertisement = 1">{{ AdvertAnti[1] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].advertisement = 2">{{ AdvertAnti[2] }}</a>
+                                <a href="#" v-on:click="servers[currentServer].advertisement = 3">{{ AdvertAnti[3] }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="donationStats element">
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript" src="elements.js"></script>
+<script type="text/javascript" src="res.js"></script>
+<script type="text/javascript" src="server.js"></script>
+<script type="text/javascript" src="save.js"></script>
+<script type="text/javascript" src="main.js"></script>
+</html>

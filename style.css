@@ -1,0 +1,342 @@
+/* Parent-level styles */
+
+* {
+    box-sizing: border-box;
+    
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial;
+}
+
+body {
+    background-color: #40798C;
+}
+
+table#adminDisp,
+table#adminTable,
+table#hostTable,
+table#donationStats {
+    margin: auto;
+}
+
+td.rowElement0,
+td.statRes {
+    font-weight: normal;
+    text-align: left;
+}
+
+#root {
+    height: calc(100vh - 40px);
+	margin: 10px 10px 0px 10px;
+	
+    border-style: solid;
+    border-color: #0B2027;
+    
+	background-color: #FFF;
+}
+
+#footer {
+    height: 30px;
+    padding: 0px 10px 0px 10px;
+    border-top: 6px solid;
+    border-color: #0B2027;
+	
+	background-color: #FFF;
+}
+
+/* Main screen styles */
+
+.screen {
+    height: 100%;
+    width: 100%;
+}
+
+/* Private server viewing page component styles */
+
+#serverHeader {
+	width: 100%;
+    height: 125px;
+}
+
+#serverInfo,
+#serverSettings {
+	width: 50%;
+    height: calc(100% - 125px);
+}
+
+.pageElement {
+    border: 3px solid;
+    border-color: #0B2027;
+    border-bottom: 0px;
+
+    float: left;
+
+    overflow: auto;
+}
+
+/* Private server header styles */
+
+#headerMid {
+    float: left;
+
+    width: 40%;
+    height: 100%;
+
+    text-align: center;
+}
+
+.headerSide {
+    float: left;
+
+    width: 30%;
+    height: 100%;
+}
+
+#serverTitle {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+/* Server information styles */
+
+#serverStatistics {
+    width: 100%;
+    height: calc(70% - 44px);
+
+    overflow: auto;
+}
+
+#serverLog {
+    border: 3px solid;
+    border-color: black;
+
+    float: left;
+    width: 100%;
+    height: 30%;
+
+    overflow: auto;
+}
+
+.statBox {
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.resGroup {
+    width: 50%;
+    margin: auto;
+    padding: 0 0 5px 0;
+}
+
+.message {
+    padding: 2px 2px 2px 2px;
+}
+
+/* Server settings styles */
+
+.settingsPage {
+    width: 100%;
+    height: fr;
+
+    overflow: auto;
+    text-align: center;
+}
+
+/* Server admins */
+
+.design {
+    color: blue;
+}
+
+.client {
+    color: darkorchid;
+}
+
+.programming {
+    color: red;
+}
+
+.scripting {
+    color: green;
+}
+
+.taskBox {
+    float: left;
+    width: 33%;
+    height: auto;
+}
+
+.taskTable {
+    text-align: left;
+}
+
+/* Ad and donator page */
+
+.cenBox {
+    width: 9vw;
+}
+
+/* Buttons */
+
+.btnHolder {
+    border-bottom: 3px dashed;
+    border-color: black;
+
+    margin: auto;
+    padding: 2px 5px 7px 5px;
+
+    width: 35%;
+    overflow: auto;
+}
+
+.btn {
+    border-style: solid;
+    cursor: pointer;
+    
+    float: left;
+    margin: 0px 4px 0px 0px;
+    
+    height: auto;
+    width: auto;
+
+    background-color: rgb(26, 240, 79);
+    
+    user-select: none;
+}
+
+.bigBtn {
+    font-size: 16px;
+}
+
+.btnDeselected {
+    background-color: white;
+}
+
+.btnDisabled {
+    background-color: #444444;
+}
+
+.btn:hover,
+.btnDeselected:hover {
+    background-color: #bdff7c;
+}
+
+.btn:active,
+.btnDeselected:active {
+    background-color: #2c7453;
+}
+
+.btnDisabled:hover,
+.btnDisabled:active {
+    background-color: #444444;
+}
+
+.btnChanged {
+    background-color: yellow;
+}
+
+.btnChanged:hover {
+    background-color: #ffff99;
+}
+
+.btnChanged:active {
+    background-color: #666600;
+}
+
+/* Generic multi-use styles */
+
+td,
+th,
+.pageElement,
+.element { /* Basic padding for any element */
+    padding: 2px 5px 2px 5px;
+}
+
+.sideHeader { /* Generates main headers w/ lines under them for server page */
+    border-bottom: 3px solid;
+
+    width: 100%;
+    margin: 0 0 5px 0;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.sideSubtitle { /* Subtitle used to head resource displays, has lines underneath */
+    box-sizing: border-box;
+    border-bottom: 3px solid;
+
+    width: 200px;
+
+    font-size: 20px;
+    text-align: left;
+}
+
+.right { /* Right text align */
+    text-align: right;
+}
+
+.aMargin { /* Automatic margin class */
+    margin: auto;
+}
+
+.dropdown { /* Parent dropdown class */
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown_elements { /* Class for div holding dropdown elements */
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown_elements a { /* Item under dropdown menu */
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown_elements a:hover { /* Hover for item under dropdown menu */
+    background-color: #2c7453;
+}
+
+.show { /* Toggle used to show dropdown elements */
+    display: block;
+}
+
+.textSubtitle,
+.textSubtitleSmall { /* Gray italisized subtitles for use under things */
+    padding: 0 0 3px 0;
+
+    font-size: 12px;
+    font-style: italic;
+    color: gray;
+}
+
+.textSubtitleSmall { /* Smaller subtitle */
+    font-size: 10px;
+}
+
+.flexRowCenter { /* Flexes in rows w/ vertical centering */
+    display: flex;
+    flex-direction: row;
+	justify-content: center;
+}
+
+.flexColCenter { /* Flexes in columns w/ vertical centering */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
